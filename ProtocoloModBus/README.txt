@@ -1,0 +1,1 @@
+Carpeta para realizar pruebas solo el protocolo ModBus
