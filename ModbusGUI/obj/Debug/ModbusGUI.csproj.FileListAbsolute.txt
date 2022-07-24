@@ -1,0 +1,15 @@
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\bin\Debug\ModbusGUI.exe.config
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\bin\Debug\ModbusGUI.exe
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\bin\Debug\ModbusGUI.pdb
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\bin\Debug\Bunifu_UI_v1.52.dll
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\bin\Debug\EasyModbus.dll
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\bin\Debug\EasyModbus.xml
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\obj\Debug\ModbusGUI.csproj.AssemblyReference.cache
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\obj\Debug\ModbusGUI.csproj.SuggestedBindingRedirects.cache
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\obj\Debug\ModbusGUI.Properties.Resources.resources
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\obj\Debug\ModbusGUI.csproj.GenerateResource.cache
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\obj\Debug\ModbusGUI.csproj.CoreCompileInputs.cache
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\obj\Debug\ModbusGUI.csproj.CopyComplete
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\obj\Debug\ModbusGUI.exe
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\obj\Debug\ModbusGUI.pdb
+C:\Users\samue\Documents\UCR\IE0217\proyecto-3-modbus-cpp-iot-esp32\ModbusGUI\obj\Debug\ModbusGUI.ModbusClientForm.resources
