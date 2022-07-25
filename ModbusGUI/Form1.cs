@@ -47,8 +47,8 @@ namespace ModbusGUI
         //Método para inicializar el timer
         private void InitializeTimer()
         {
-            // Censa cada 2.5 segundos
-            timer1.Interval = 2500;
+            // Censa cada 1.5 segundos
+            timer1.Interval = 1500;
             // Comenzar
             timer1.Enabled = true;
             // Cada 1.5 seg, llamar ReadFlameData
@@ -67,13 +67,23 @@ namespace ModbusGUI
                 // Si detectó una flama
                 if (lectura[0] != 0)
                 {
-                    // Feedback en la app
-                    FireVisual(true);
-                    AlarmVisual(true);
-                    AlarmSound(true);
-                    /*Esconde botones de prueba de alarma
-                    para evitar interferir con la señal*/
-                    ButtonVisibility(false, "alarm");
+                    try
+                    {
+                        // Metodo Modbus para escribir a un coil
+                        modbusClient.WriteSingleCoil(100, true);
+                        // Feedback en la app
+                        FireVisual(true);
+                        AlarmVisual(true);
+                        AlarmSound(true);
+                        /*Esconde botones de prueba de alarma
+                        para evitar interferir con la señal*/
+                        ButtonVisibility(false, "alarm");
+                    }
+                    catch
+                    {
+                        // Ventana emergente
+                        MessageBox.Show("Falló la escritura del coil", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 // Si no detectó flama y estamos durante una prueba
                 else if (lectura[0] == 0 && TestStatus)
