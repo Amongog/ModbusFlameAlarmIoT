@@ -65,7 +65,7 @@ namespace ModbusGUI
                 // Método Modbus para lectura de registro
                 lectura = modbusClient.ReadHoldingRegisters(101,1);
                 // Si detectó una flama
-                if (lectura[0] == 1)
+                if (lectura[0] != 0)
                 {
                     // Feedback en la app
                     FireVisual(true);
