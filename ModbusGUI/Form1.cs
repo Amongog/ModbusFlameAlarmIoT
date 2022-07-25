@@ -68,7 +68,7 @@ namespace ModbusGUI
                 if (lectura[0] != 0)
                 {
                     // Delay
-                    //System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(1000);
                     // Metodo Modbus para escribir a un coil
                     modbusClient.WriteSingleCoil(100, true);
                     // Feedback en la app
@@ -91,7 +91,7 @@ namespace ModbusGUI
                 else
                 {
                     // Delay
-                    //System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(1000);
                     // Metodo Modbus para escribir a un coil
                     modbusClient.WriteSingleCoil(100, false);
                     // Feedback en la app
