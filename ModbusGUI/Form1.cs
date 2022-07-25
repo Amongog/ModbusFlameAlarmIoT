@@ -44,7 +44,7 @@ namespace ModbusGUI
             }
         }
 
-        //Método para inicializar el timer
+        /*//Método para inicializar el timer
         private void InitializeTimer()
         {
             // Censa cada 1.5 segundos
@@ -53,10 +53,10 @@ namespace ModbusGUI
             timer1.Enabled = true;
             // Cada 1.5 seg, llamar ReadFlameData
             timer1.Tick += new EventHandler(ReadFlameData);
-        }
+        }*/
 
         // Método para lectura de holding register @200
-        private void ReadFlameData(object sender, System.EventArgs e)
+        private void ReadFlameData()
         {
             // Si el sensor está armado
             if (SensorStatus)
@@ -256,9 +256,10 @@ namespace ModbusGUI
             // Si tenemos conexión a servidor
             if (modbusClient.Connected)
             {
-                // Comienza el timer y toma de datos
-                InitializeTimer();
+                /*// Comienza el timer y toma de datos
+                InitializeTimer();*/
                 // Visibilidad de botones
+                timer1.Start();
                 ButtonVisibility(false, "detector");
                 // Indicador de proceso
                 SensorStatus = true;
@@ -406,6 +407,11 @@ namespace ModbusGUI
                 flameGIF.Visible= false;
                 fireDetected.Visible= false;
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            ReadFlameData();
         }
     }
 }
