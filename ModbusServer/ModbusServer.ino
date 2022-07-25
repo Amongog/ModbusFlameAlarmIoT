@@ -58,7 +58,12 @@ void loop() {
    if (millis() > ts + 2000) {
        ts = millis();
        //Setting raw value (0-1024)
+       if (analogRead(A0)>0){
+       mb.Ireg(SENSOR_IREG, 1);
+       }
+       else{
        mb.Ireg(SENSOR_IREG, analogRead(A0));
+       }
    }
    delay(10);
 
