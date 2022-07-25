@@ -47,15 +47,15 @@ namespace ModbusGUI
         //Método para inicializar el timer
         private void InitializeTimer()
         {
-            // Censa cada 1.5 segundos
+            // Censa cada 2.5 segundos
             timer1.Interval = 1500;
             // Comenzar
             timer1.Enabled = true;
-            // Cada 1.5 seg, llamar ReadFlameData
+            // Cada 2.5 seg, llamar ReadFlameData
             timer1.Tick += new EventHandler(ReadFlameData);
         }
 
-        // Método para lectura de holdin/input register @101
+        // Método para lectura de holding register @200
         private void ReadFlameData(object sender, System.EventArgs e)
         {
             // Si el sensor está armado
@@ -67,6 +67,8 @@ namespace ModbusGUI
                 // Si detectó una flama
                 if (lectura[0] != 0)
                 {
+                    // Delay
+                    //System.Threading.Thread.Sleep(1000);
                     // Metodo Modbus para escribir a un coil
                     modbusClient.WriteSingleCoil(100, true);
                     // Feedback en la app
@@ -88,6 +90,8 @@ namespace ModbusGUI
                 // Si no detectó flama y no estamos haciendo prueba
                 else
                 {
+                    // Delay
+                    //System.Threading.Thread.Sleep(1000);
                     // Metodo Modbus para escribir a un coil
                     modbusClient.WriteSingleCoil(100, false);
                     // Feedback en la app
