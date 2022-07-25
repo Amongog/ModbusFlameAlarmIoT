@@ -67,23 +67,15 @@ namespace ModbusGUI
                 // Si detectó una flama
                 if (lectura[0] != 0)
                 {
-                    try
-                    {
-                        // Metodo Modbus para escribir a un coil
-                        modbusClient.WriteSingleCoil(100, true);
-                        // Feedback en la app
-                        FireVisual(true);
-                        AlarmVisual(true);
-                        AlarmSound(true);
-                        /*Esconde botones de prueba de alarma
-                        para evitar interferir con la señal*/
-                        ButtonVisibility(false, "alarm");
-                    }
-                    catch
-                    {
-                        // Ventana emergente
-                        MessageBox.Show("Falló la escritura del coil", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    // Metodo Modbus para escribir a un coil
+                    modbusClient.WriteSingleCoil(100, true);
+                    // Feedback en la app
+                    FireVisual(true);
+                    AlarmVisual(true);
+                    AlarmSound(true);
+                    /*Esconde botones de prueba de alarma
+                    para evitar interferir con la señal*/
+                    ButtonVisibility(false, "alarm");
                 }
                 // Si no detectó flama y estamos durante una prueba
                 else if (lectura[0] == 0 && TestStatus)
@@ -96,6 +88,8 @@ namespace ModbusGUI
                 // Si no detectó flama y no estamos haciendo prueba
                 else
                 {
+                    // Metodo Modbus para escribir a un coil
+                    modbusClient.WriteSingleCoil(100, false);
                     // Feedback en la app
                     FireVisual(false);
                     AlarmVisual(false);
@@ -275,6 +269,8 @@ namespace ModbusGUI
             // Si tenemos conexión y NO estábamos durante una prueba de alarma
             if (modbusClient.Connected && !TestStatus)
             {
+                // Metodo Modbus para escribir a un coil
+                modbusClient.WriteSingleCoil(100, false);
                 // Para de censar datos
                 timer1.Stop();
                 // Feedback en la app
@@ -303,6 +299,8 @@ namespace ModbusGUI
             // Si no tenemos conexión con el servidor
             else
             {
+                // Metodo Modbus para escribir a un coil
+                modbusClient.WriteSingleCoil(100, false);
                 // Para de censar datos
                 timer1.Stop();
                 // Feedback en la app
