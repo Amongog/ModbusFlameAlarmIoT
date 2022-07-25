@@ -12,7 +12,7 @@ namespace ModbusGUI
         ModbusClient modbusClient = new ModbusClient();
         // Indicadores de procesos
         private bool SensorStatus = false;
-        private bool TestStatus = false;
+        private bool AlarmStatus = false;
         private bool SoundPlaying = false;
 
         // Método Constructor
@@ -67,10 +67,6 @@ namespace ModbusGUI
                 // Si detectó una flama
                 if (lectura[0] != 0)
                 {
-                    // Delay
-                    System.Threading.Thread.Sleep(1000);
-                    // Metodo Modbus para escribir a un coil
-                    modbusClient.WriteSingleCoil(100, true);
                     // Feedback en la app
                     FireVisual(true);
                     AlarmVisual(true);
@@ -80,7 +76,7 @@ namespace ModbusGUI
                     ButtonVisibility(false, "alarm");
                 }
                 // Si no detectó flama y estamos durante una prueba
-                else if (lectura[0] == 0 && TestStatus)
+                else if (lectura[0] == 0 && AlarmStatus)
                 {
                     // Feedback en la app
                     FireVisual(false);
@@ -90,10 +86,6 @@ namespace ModbusGUI
                 // Si no detectó flama y no estamos haciendo prueba
                 else
                 {
-                    // Delay
-                    System.Threading.Thread.Sleep(1000);
-                    // Metodo Modbus para escribir a un coil
-                    modbusClient.WriteSingleCoil(100, false);
                     // Feedback en la app
                     FireVisual(false);
                     AlarmVisual(false);
@@ -172,7 +164,7 @@ namespace ModbusGUI
             }
         }
 
-        // Método para la prueba de la alarma
+        // Método para encender la alarma
         private void alarmOnBtn_Click(object sender, EventArgs e)
         {
             // Si existe conexión a servidor
@@ -186,7 +178,7 @@ namespace ModbusGUI
                     AlarmVisual(true);
                     AlarmSound(true);
                     // Indicador de proceso
-                    TestStatus = true;
+                    AlarmStatus = true;
                 }
                 catch
                 {
@@ -194,7 +186,7 @@ namespace ModbusGUI
                     AlarmVisual(false);
                     AlarmSound(false);
                     // Indicador de proceso
-                    TestStatus = false;
+                    AlarmStatus = false;
                     // Ventana emergente
                     MessageBox.Show("Algo salió mal, revise la dirección de coil", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -206,13 +198,12 @@ namespace ModbusGUI
             }
         }
 
-        // Método para terminar la prueba de la alarma
+        // Método para apagar la alarma
         private void alarmOffBtn_Click(object sender, EventArgs e)
         {
             // Si existe conexión a servidor
             if (modbusClient.Connected)
             {
-                // Intenta comenzar la prueba de alarma
                 try
                 {
                     // Apaga la alarma en el ESP32
@@ -221,7 +212,7 @@ namespace ModbusGUI
                     AlarmVisual(false);
                     AlarmSound(false);
                     // Cambio de status
-                    TestStatus = false;
+                    AlarmStatus = false;
                 }
                 // Si la prueba falla
                 catch
@@ -230,7 +221,7 @@ namespace ModbusGUI
                     AlarmVisual(true);
                     AlarmSound(true);
                     // Indicador de proceso
-                    TestStatus = true;
+                    AlarmStatus = true;
                     // Ventana emergente
                     MessageBox.Show("Dirección/Conexión de coil incorrecta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -271,7 +262,7 @@ namespace ModbusGUI
         private void detectorOffBtn_Click(object sender, EventArgs e)
         {
             // Si tenemos conexión y NO estábamos durante una prueba de alarma
-            if (modbusClient.Connected && !TestStatus)
+            if (modbusClient.Connected && !AlarmStatus)
             {
                 // Metodo Modbus para escribir a un coil
                 modbusClient.WriteSingleCoil(100, false);
@@ -288,7 +279,7 @@ namespace ModbusGUI
                 SensorStatus = false;
             }
             // Si tenemos conexión y SÍ estabamos durante una prueba de alarma
-            else if(modbusClient.Connected && TestStatus)
+            else if(modbusClient.Connected && AlarmStatus)
             {
                 // Para de sensar datos
                 timer1.Stop();
