@@ -67,34 +67,30 @@ namespace ModbusGUI
                 // Si detectó una flama
                 if (lectura[0] != 0)
                 {
-                    // Metodo Modbus para escribir a un coil
-                    modbusClient.WriteSingleCoil(100, true);
                     // Feedback en la app
                     FireVisual(true);
                     AlarmVisual(true);
                     AlarmSound(true);
-                    /*Esconde botones de prueba de alarma
+                    /*Esconde botones de alarma
                     para evitar interferir con la señal*/
-                    ButtonVisibility(false, "alarm");
+                    ButtonVisibility(true, "alarm");
                 }
-                // Si no detectó flama y estamos durante una prueba
+                // Si no detectó flama y estamos con la alarma puesta
                 else if (lectura[0] == 0 && AlarmStatus)
                 {
                     // Feedback en la app
                     FireVisual(false);
-                    // Regresa los botones de prueba ya que no hay fuego
+                    // Regresa los botones de alarma ya que no hay fuego
                     ButtonVisibility(true, "alarm");
                 }
-                // Si no detectó flama y no estamos haciendo prueba
+                // Si no detectó flama y no estamos con la alarma encendida
                 else
                 {
-                    // Metodo Modbus para escribir a un coil
-                    modbusClient.WriteSingleCoil(100, false);
                     // Feedback en la app
                     FireVisual(false);
                     AlarmVisual(false);
                     AlarmSound(false);
-                    // Regresa los botones de prueba ya que no hay fuego
+                    // Regresa los botones de alarma ya que no hay fuego
                     ButtonVisibility(true, "alarm");
                 }
             }
@@ -105,7 +101,7 @@ namespace ModbusGUI
                 FireVisual(false);
                 AlarmVisual(false);
                 AlarmSound(false);
-                // Muestra botones de prueba de alarma
+                // Muestra botones de alarma
                 ButtonVisibility(true, "alarm");
             }
         }
@@ -117,8 +113,18 @@ namespace ModbusGUI
             if (modbusClient.Connected){
                 try
                 {
-                    // Visibilidad de botones
+                    // Desconecta feedback
+                    FireVisual(false);
+                    AlarmVisual(false);
+                    AlarmSound(false);
+                    // Desconecta alarma
+                    modbusClient.WriteSingleCoil(100, false);
+                    // Muestra botones
                     ButtonVisibility(true, "connect");
+                    ButtonVisibility(true, "alarm");
+                    ButtonVisibility(true, "detector");
+                    // Para de censar datos
+                    timer1.Stop();
                     // Desconexión del ESP32
                     modbusClient.Disconnect();
                     // Ventana emergente
@@ -218,7 +224,7 @@ namespace ModbusGUI
                     // Cambio de status
                     AlarmStatus = false;
                 }
-                // Si la prueba falla
+                // Si la alarma falla
                 catch
                 {
                     // Feedback en la app
@@ -265,7 +271,7 @@ namespace ModbusGUI
         // Método para desconectar el sensor de flama
         private void detectorOffBtn_Click(object sender, EventArgs e)
         {
-            // Si tenemos conexión y NO estábamos durante una prueba de alarma
+            // Si tenemos conexión y NO estábamos con la alarma
             if (modbusClient.Connected && !AlarmStatus)
             {
                 // Metodo Modbus para escribir a un coil
@@ -282,7 +288,7 @@ namespace ModbusGUI
                 // Indicador de proceso
                 SensorStatus = false;
             }
-            // Si tenemos conexión y SÍ estabamos durante una prueba de alarma
+            // Si tenemos conexión y SÍ estabamos la alarma
             else if(modbusClient.Connected && AlarmStatus)
             {
                 // Para de sensar datos
