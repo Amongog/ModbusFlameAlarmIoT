@@ -54,7 +54,7 @@ void setup() {
 
 void loop() {
 
-  //La lectura se dará cada 2 segundos
+  //La lectura se dará cada 1 segundo
 
   mb.task();
   //if (sensor != analogRead(A0)) {
