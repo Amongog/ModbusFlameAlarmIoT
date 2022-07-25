@@ -2,7 +2,7 @@
 | Integrante | Carné |
 | ------ | ------ |
 | Samuel Berrocal Soto | B40993 |
-| Kendall Cruz Sosa | B4... |
+| Kendall Cruz Sosa | B42176 |
 
 ## Objetivos
 1. Implementar el protocolo Modbus TCP/IP para conectar un cliente (PC) con un servidor (ESP32) haciendo uso de la librería ArduinoModbus (C++). 
