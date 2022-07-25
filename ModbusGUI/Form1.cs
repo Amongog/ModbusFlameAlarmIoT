@@ -47,11 +47,11 @@ namespace ModbusGUI
         //Método para inicializar el timer
         private void InitializeTimer()
         {
-            // Censa cada 2.5 segundos
+            // Censa cada 1.5 segundos
             timer1.Interval = 1500;
             // Comenzar
             timer1.Enabled = true;
-            // Cada 2.5 seg, llamar ReadFlameData
+            // Cada 1.5 seg, llamar ReadFlameData
             timer1.Tick += new EventHandler(ReadFlameData);
         }
 
@@ -62,8 +62,8 @@ namespace ModbusGUI
             if (SensorStatus)
             {
                 int[] lectura;
-                // Método Modbus para lectura de registro
-                lectura = modbusClient.ReadHoldingRegisters(200,1);
+                // Método Modbus para lectura de registro de entrada
+                lectura = modbusClient.ReadInputRegisters(200,1);
                 // Si detectó una flama
                 if (lectura[0] != 0)
                 {

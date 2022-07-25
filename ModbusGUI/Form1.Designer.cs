@@ -188,7 +188,8 @@
             // 
             // timer1
             // 
-            this.timer1.Tick += new System.EventHandler(this.detectorOnBtn_Click);
+            this.timer1.Interval = 2000;
+            this.timer1.Tick += new System.EventHandler(this.ReadFlameData);
             // 
             // activarDetector
             // 
