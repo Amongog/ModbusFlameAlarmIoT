@@ -44,74 +44,6 @@ namespace ModbusGUI
             }
         }
 
-        /*//Método para inicializar el timer
-        private void InitializeTimer()
-        {
-            // Censa cada 1.5 segundos
-            timer1.Interval = 1500;
-            // Comenzar
-            timer1.Enabled = true;
-            // Cada 1.5 seg, llamar ReadFlameData
-            timer1.Tick += new EventHandler(ReadFlameData);
-        }*/
-
-        // Método para lectura de holding register @200
-        private void ReadFlameData()
-        {
-            // Si el sensor está armado
-            if (SensorStatus)
-            {
-                int[] lectura;
-                // Método Modbus para lectura de registro de entrada
-                lectura = modbusClient.ReadInputRegisters(200,1);
-                // Si detectó una flama
-                if (lectura[0] != 0)
-                {
-                    // Metodo Modbus para escribir a un coil
-                    modbusClient.WriteSingleCoil(100, true);
-                    // Feedback en la app
-                    FireVisual(true);
-                    AlarmVisual(true);
-                    AlarmSound(true);
-                    /*Esconde botones de alarma
-                    para evitar interferir con la señal*/
-                    ButtonVisibility(true, "alarm");
-                }
-                // Si no detectó flama y estamos con la alarma puesta
-                else if (lectura[0] == 0 && AlarmStatus)
-                {
-                    // Feedback en la app
-                    FireVisual(false);
-                    // Regresa los botones de alarma ya que no hay fuego
-                    ButtonVisibility(true, "alarm");
-                }
-                // Si no detectó flama y no estamos con la alarma encendida
-                else
-                {
-                    // Metodo Modbus para escribir a un coil
-                    modbusClient.WriteSingleCoil(100, false);
-                    // Feedback en la app
-                    FireVisual(false);
-                    AlarmVisual(false);
-                    AlarmSound(false);
-                    // Regresa los botones de alarma ya que no hay fuego
-                    ButtonVisibility(true, "alarm");
-                }
-            }
-            // Si el sensor no está armado
-            else
-            {
-                // Metodo Modbus para escribir a un coil
-                modbusClient.WriteSingleCoil(100, false);
-                // Feedback en la app
-                FireVisual(false);
-                AlarmVisual(false);
-                AlarmSound(false);
-                // Muestra botones de alarma
-                ButtonVisibility(true, "alarm");
-            }
-        }
-
         // Método para desconexión del servidor
         private void disconnectBtn_Click(object sender, EventArgs e)
         {
@@ -256,10 +188,9 @@ namespace ModbusGUI
             // Si tenemos conexión a servidor
             if (modbusClient.Connected)
             {
-                /*// Comienza el timer y toma de datos
-                InitializeTimer();*/
-                // Visibilidad de botones
+                // Comienza el timer y toma de datos
                 timer1.Start();
+                // Visibilidad de botones
                 ButtonVisibility(false, "detector");
                 // Indicador de proceso
                 SensorStatus = true;
@@ -326,6 +257,69 @@ namespace ModbusGUI
                 SensorStatus = false;
                 // Ventana emergente
                 MessageBox.Show("Se perdió la conexión con el servidor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        //  Método para ejecutar una función con cada tick de tiempo (1.5 s)
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            ReadFlameData();
+        }
+
+        // Método para lectura de holding register @200
+        private void ReadFlameData()
+        {
+            // Si el sensor está armado
+            if (SensorStatus)
+            {
+                int[] lectura;
+                // Método Modbus para lectura de registro de entrada
+                lectura = modbusClient.ReadInputRegisters(200, 1);
+                // Si detectó una flama
+                if (lectura[0] != 0)
+                {
+                    // Metodo Modbus para escribir a un coil
+                    modbusClient.WriteSingleCoil(100, true);
+                    // Feedback en la app
+                    FireVisual(true);
+                    AlarmVisual(true);
+                    AlarmSound(true);
+                    /*Esconde botones de alarma
+                    para evitar interferir con la señal*/
+                    ButtonVisibility(true, "alarm");
+                }
+                // Si no detectó flama y estamos con la alarma puesta
+                else if (lectura[0] == 0 && AlarmStatus)
+                {
+                    // Feedback en la app
+                    FireVisual(false);
+                    // Regresa los botones de alarma ya que no hay fuego
+                    ButtonVisibility(true, "alarm");
+                }
+                // Si no detectó flama y no estamos con la alarma encendida
+                else
+                {
+                    // Metodo Modbus para escribir a un coil
+                    modbusClient.WriteSingleCoil(100, false);
+                    // Feedback en la app
+                    FireVisual(false);
+                    AlarmVisual(false);
+                    AlarmSound(false);
+                    // Regresa los botones de alarma ya que no hay fuego
+                    ButtonVisibility(true, "alarm");
+                }
+            }
+            // Si el sensor no está armado
+            else
+            {
+                // Metodo Modbus para escribir a un coil
+                modbusClient.WriteSingleCoil(100, false);
+                // Feedback en la app
+                FireVisual(false);
+                AlarmVisual(false);
+                AlarmSound(false);
+                // Muestra botones de alarma
+                ButtonVisibility(true, "alarm");
             }
         }
 
@@ -407,11 +401,6 @@ namespace ModbusGUI
                 flameGIF.Visible= false;
                 fireDetected.Visible= false;
             }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            ReadFlameData();
         }
     }
 }
