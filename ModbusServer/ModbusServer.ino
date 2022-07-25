@@ -6,7 +6,7 @@
 #include "ModbusIP_ESP8266.h"
 
 //Modbus Registers Offsets
-const int SENSOR_IREG = 101; //Aquí tenemos la ubicación de la información del sensor de llama
+const int SENSOR_IREG = 200; //Aquí tenemos la ubicación de la información del sensor de llama
 const int LED_COIL = 100; //Aquí tenemos la ubicación de la información para el output
 //Used Pins
 const int ledPin = 23; //GPIO23
@@ -57,13 +57,10 @@ void loop() {
    //La lectura se dará cada 2 segundos
    if (millis() > ts + 2000) {
        ts = millis();
-       //Setting raw value (0-1024)
-       if (analogRead(A0)>0){
-       mb.Ireg(SENSOR_IREG, 1);
-       }
-       else{
-       mb.Ireg(SENSOR_IREG, analogRead(A0));
-       }
+       
+       float sensor=analogRead(A0);
+       mb.Ireg(SENSOR_IREG, round(sensor));
+       //}
    }
    delay(10);
 
