@@ -85,33 +85,6 @@ namespace ModbusGUI
             }
         }
 
-        // Método para el manejo de sonido de alarma
-        private void AlarmSound(bool PlaySound = true)
-        {
-            SoundPlayer audio = new SoundPlayer(ModbusGUI.Properties.Resources.temporal3);
-            // Si se solicita sonido y no está sonando
-            if (PlaySound && !SoundPlaying)
-            {
-                audio.PlayLooping();
-                // Indicador de proceso
-                SoundPlaying = true;
-            }
-            // Si se solicita sonido y ya estaba sonando
-            else if (PlaySound && SoundPlaying)
-            {
-                // Continue sonando...
-                // Indicador de proceso
-                SoundPlaying = true;
-            }
-            // Si se solicita detener el sonido
-            else if(!PlaySound)
-            {
-                audio.Stop();
-                // Indicador de proceso
-                SoundPlaying = false;
-            }
-        }
-
         // Método para encender la alarma
         private void alarmOnBtn_Click(object sender, EventArgs e)
         {
@@ -320,6 +293,33 @@ namespace ModbusGUI
                 AlarmSound(false);
                 // Muestra botones de alarma
                 ButtonVisibility(true, "alarm");
+            }
+        }
+
+        // Método para el manejo de sonido de alarma
+        private void AlarmSound(bool PlaySound = true)
+        {
+            SoundPlayer audio = new SoundPlayer(ModbusGUI.Properties.Resources.temporal3);
+            // Si se solicita sonido y no está sonando
+            if (PlaySound && !SoundPlaying)
+            {
+                audio.PlayLooping();
+                // Indicador de proceso
+                SoundPlaying = true;
+            }
+            // Si se solicita sonido y ya estaba sonando
+            else if (PlaySound && SoundPlaying)
+            {
+                // Continue sonando...
+                // Indicador de proceso
+                SoundPlaying = true;
+            }
+            // Si se solicita detener el sonido
+            else if (!PlaySound)
+            {
+                audio.Stop();
+                // Indicador de proceso
+                SoundPlaying = false;
             }
         }
 
