@@ -5,10 +5,10 @@
 #endif
 #include "ModbusIP_ESP8266.h"
 
-//Modbus Registers Offsets
+//Registros de los Offset de Modbus
 const int SENSOR_IREG = 200; //Aquí tenemos la ubicación de la información del sensor de llama
 const int LED_COIL = 100; //Aquí tenemos la ubicación de la información para el output
-//Used Pins
+//Pines a utilizar
 const int ledPin = 23; //GPIO23
 const int sensor = 0;
 
@@ -35,13 +35,9 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP()); //imprime la IP local del servidor
 
-  float sensor = 0;
-
-
-
   mb.server();    //Encendemos el servidor Modbus IP
   // Agregamos el registro SENSOR_IREG
-  // Se debe usaraddIreg() para entradas análogas
+  // Se debe usar addIreg() para entradas análogas
   mb.addIreg(SENSOR_IREG);
 
   //este método imprime el tiempo desde que se inició el programa
@@ -57,7 +53,6 @@ void loop() {
   //La lectura se dará cada 1 segundo
 
   mb.task();
-  //if (sensor != analogRead(A0)) {
     if (millis() > ts + 1000) {
       ts = millis();
       if (analogRead(A0) > 0) {
@@ -67,8 +62,7 @@ void loop() {
         mb.Ireg(SENSOR_IREG, analogRead(A0));
       }
     }
- // }
-  //Empezamos el codigo para escribir en el output de manera binaria
+  //Empezamos el código para escribir en el output de manera binaria
   digitalWrite(ledPin, mb.Coil(LED_COIL));
   delay(10);
 
