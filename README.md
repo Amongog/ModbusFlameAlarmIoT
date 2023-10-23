@@ -859,7 +859,7 @@ Estos son métodos que se encargan de controlar funciones secundarias dentro de 
 
 <!--  -->
 ## 6. Video Demonstración
-<iframe width="2543" height="1120" src="https://www.youtube.com/embed/r1ZYMd3zPPk" title="Prueba Proyecto Modbus TCP/IP con ESP32" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[Prueba Proyecto Modbus TCP/IP con ESP32](https://www.youtube.com/watch?v=r1ZYMd3zPPk&t=1s)
 <!--  -->
 
 ---
